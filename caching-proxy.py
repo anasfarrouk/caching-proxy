@@ -16,9 +16,6 @@ async   def build_parser():
     start.add_argument('--port',type=int,required=True)
     start.set_defaults(func=start_server)
 
-    clear       =   subparser.add_parser('--clear-cache',help='clear the cache')
-    clear.set_defaults(func=clear_cache)
-
     return  parser
 
 async   def open_conn(host:str):
@@ -91,13 +88,10 @@ async   def start_server(args):
     async   with    server:
         await   server.serve_forever()
 
-async   def clear_cache(args):
-    pass
-
 async   def main(argv=None):
     parser  =   await   build_parser()
     args    =   parser.parse_args(argv)
-    args.func(args)
+    await   args.func(args)
 
 if  __name__    ==  "__main__":
     asyncio.run(main())
